@@ -1,5 +1,52 @@
 <!DOCTYPE html><html class="no-js" lang="en"><head>
 
+       <!-- <script>document.addEventListener('DOMContentLoaded',function(){document.querySelector('.wh-ap-btn').addEventListener('click',function(event){event.preventDefault();yourCustomFunction();const whatsappLink=document.getElementById('whatsapp-link').href;window.open(whatsappLink,'_blank')})});function yourCustomFunction(){console.log("WhatsApp button clicked. Executing custom function...")}</script> -->
+
+    <!-- Google Tag Manager (noscript) Trivandrum -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-53JJCB8Q" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) Trivandrum -->
+
+    <!-- Google Tag Manager (noscript) crayonze -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WRGVCR9P" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) crayonze -->
+
+    <!-- <script type="text/javascript" src="assets/js/jquery-1.8.2.js"></script> -->
+
+    <!-- Messenger Chat plugin Code -->
+    <div id="fb-root"></div>
+
+    <!-- Your Chat plugin code -->
+    <div id="fb-customer-chat" class="fb-customerchat">
+    </div>
+
+    <script>
+        var chatbox = document.getElementById('fb-customer-chat');
+        chatbox.setAttribute("page_id", "1184154485038072");
+        chatbox.setAttribute("attribution", "biz_inbox");
+    </script>
+
+    <!-- Your SDK code -->
+    <!-- <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                xfbml: true,
+                version: 'v14.0'
+            });
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script> -->
+
     <style>
         .modal {
             width: 100%;
@@ -206,7 +253,7 @@
         }
         function togglePlaceInput() { let cu_place = document.getElementById("cu_place").value; let locDivIn = document.getElementById("locdivin"); let locDivOut = document.getElementById("locdivoutin"); if (cu_place === "Out Side India") { locDivIn.style.display = "none"; locDivOut.style.display = "block" } else { locDivIn.style.display = "block"; locDivOut.style.display = "none" } }</script>
 
-    <div class="form-parent">
+    <div class='form-parent'>
         <!-- <img class="img-fluid heart heart-1 heart-2" src="./assets/images/icon/enquiry.png" alt=""> -->
         <button>ENQUIRY</button>
     </div>
@@ -227,52 +274,78 @@
             </div>
             <div class="col-12 m-auto ">
 
-                <form action="https://formsubmit.co/sanjupappachan8943@gmail.com" method="POST">
+                <form id="enquiryForm" action="sendemail.php" method="post" onsubmit="return validateForm();">
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label id="errmsg" style="color:green;"></label>
                         </div>
                         <div class="form-group col-md-12 col-sm-12">
-                            <input type="text" class="form-control" id="exampleInputName" name="name" placeholder="Enter Name">
+                            <input type="text" class="form-control" id="exampleInputName" name="name"
+                                placeholder="Enter Name">
                         </div>
                     </div>
                     <div class="row responsive-mobile">
                         <div class="form-group col-lg-6 col-md-6 col-sm-6">
-                            <input type="text" class="form-control" id="exampleInputPhone" name="phone" placeholder="Phone No.">
+                            <input type="text" class="form-control" id="exampleInputPhone" name="phone"
+                                placeholder="Phone No.">
                         </div>
                         <div class="form-group col-lg-6 col-md-6 col-sm-6">
-                            <input type="email" class="form-control" id="exampleInputEmail" name="email" placeholder="Enter Email">
+                            <input type="email" class="form-control" id="exampleInputEmail" name="email"
+                                placeholder="Enter Email">
                         </div>
                     </div>
                     <div class="row responsive-mobile">
                         <div class="form-group col-lg-6 col-md-6 col-sm-6">
                             <select name="cu_place" id="cu_place" class="form-control" onchange="togglePlaceInput();">
-                                <option value="Kerala">Kerala</option>
-                                <option value="Out Side Kerala">Outside Kerala</option>
+                                <option value="India">India</option>
+                                <option value="Out Side India">Outside India</option>
                             </select>
                         </div>
                         <div class="form-group col-lg-6 col-md-6 col-sm-6" id="locdivin">
                             <select class="form-control" id="location_name" name="location_name">
                                 <option value="">Select a location</option>
-                                <option value="KASARGOD">KASAGOD</option>
-                                <option value="KANNUR">KANNUR</option>
-                                <option value="WAYANAD">WAYANAD</option>
-                                <option value="KOZHIKODE">KOZHIKODE</option>
-                                <option value="MALAPPURAM">MALAPPURAM</option>
-                                <option value="PALAKKAD">PALAKKAD</option>
-                                <option value="THRISSUR">TRISSUR</option>
-                                <option value="ERNAKULAM">ERNAKULAM</option>
-                                <option value="IDUKKI">IDUKKI</option>
-                                <option value="KOTTAYAM">KOTTAYAM</option>
-                                <option value="PATHANAMTHITTA">PATHANAMTHITTA</option>
-                                <option value="ALAPPUZHA">ALAPPUZHA</option>
-                                <option value="KOLLAM">KOLLAM</option>
-                                <option value="THIRUVANANTHAPURAM">THIRUVANANTHAPURAM</option>
+                                <option value="ANDAMAN & NICOBAR">ANDAMAN & NICOBAR</option>
+                                <option value="ANDHRA PRADESH">ANDHRA PRADESH</option>
+                                <option value="ARUNACHAL PRADESH">ARUNACHAL PRADESH</option>
+                                <option value="ASSAM">ASSAM</option>
+                                <option value="BIHAR">BIHAR</option>
+                                <option value="CHANDIGARH">CHANDIGARH</option>
+                                <option value="CHATTISGARH">CHATTISGARH</option>
+                                <option value="DADRA & NAGAR">DADRA & NAGAR</option>
+                                <option value="DAMAN & DIU">DAMAN & DIU</option>
+                                <option value="DELHI">DELHI</option>
+                                <option value="GOA">GOA</option>
+                                <option value="GUJRAT">GUJRAT</option>
+                                <option value="HARYANA">HARYANA</option>
+                                <option value="HIMACHAL PRADESH">HIMACHAL PRADESH</option>
+                                <option value="JAMMU & KASHMIR">JAMMU & KASHMIR</option>
+                                <option value="JHARKHAND">JHARKHAND</option>
+                                <option value="KARNATAKA">KARNATAKA</option>
+                                <option value="KERALA">KERALA</option>
+                                <option value="LAKSHDWEEP">LAKSHDWEEP</option>
+                                <option value="MADHYA PRADESH">MADHYA PRADESH</option>
+                                <option value="MAHARASHTRA">MAHARASHTRA</option>
+                                <option value="MANIPUR">MANIPUR</option>
+                                <option value="MEGHALAYA">MEGHALAYA</option>
+                                <option value="MIZORAM">MIZORAM</option>
+                                <option value="NAGALAND">NAGALAND</option>
+                                <option value="ORISSA">ORISSA</option>
+                                <option value="PONDICHERY">PONDICHERY</option>
+                                <option value="PUNJAB">PUNJAB</option>
+                                <option value="RAJASTHAN">RAJASTHAN</option>
+                                <option value="SIKKIM">SIKKIM</option>
+                                <option value="TAMIL NADU">TAMIL NADU</option>
+                                <option value="TELANGANA">TELANGANA</option>
+                                <option value="TRIPURA">TRIPURA</option>
+                                <option value="UTTAR PRADESH">UTTAR PRADESH</option>
+                                <option value="UTTARANCHAL">UTTARANCHAL</option>
+                                <option value="WEST BENGAL">WEST BENGAL</option>
                                 <!-- Add other states -->
                             </select>
                         </div>
                         <div class="form-group col-md-6 col-sm-6" id="locdivoutin" style="display:none;">
-                            <input type="text" class="form-control" id="outsideLocation" name="outside_location" placeholder="Enter Place">
+                            <input type="text" class="form-control" id="outsideLocation" name="outside_location"
+                                placeholder="Enter Place">
                         </div>
                     </div>
                     <!-- reCAPTCHA widget -->
@@ -350,7 +423,7 @@
     </script>
 
     <!-- <script src='./assets/js/jquery.min.js'></script> -->
-    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script id="rendered-js">
         $("button").click(function () {
             $(".popup").fadeIn(500);
