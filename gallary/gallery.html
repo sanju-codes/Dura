@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+    }
+    .gallery img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <h1>JAY JAY Roofings Gallery</h1>
+  <div class="gallery">
+    <img src="images/upvc.webp" alt="Image 1">
+    <img src="https://via.placeholder.com/401" alt="Image 2">
+    <img src="https://via.placeholder.com/402" alt="Image 3">
+    <img src="https://via.placeholder.com/403" alt="Image 4">
+    <img src="https://via.placeholder.com/404" alt="Image 5">
+    <img src="https://via.placeholder.com/405" alt="Image 6">
+    <img src="https://via.placeholder.com/400" alt="Image 1">
+    <img src="https://via.placeholder.com/401" alt="Image 2">
+    <img src="https://via.placeholder.com/402" alt="Image 3">
+    <img src="https://via.placeholder.com/403" alt="Image 4">
+    <img src="https://via.placeholder.com/404" alt="Image 5">
+    <img src="https://via.placeholder.com/405" alt="Image 6">
+  </div>
+</body>
+</html>
