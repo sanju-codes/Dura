@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 navLinks.style.display = "flex";
                 navLinks.style.flexDirection = "column";
                 navLinks.style.position = "absolute";
-                navLinks.style.top = "85px";
+                navLinks.style.top = "95px";
                 navLinks.style.left = "0";
                 navLinks.style.width = "100%";
                 navLinks.style.background = "#fff";
