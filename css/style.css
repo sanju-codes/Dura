@@ -63,13 +63,31 @@ nav{
 }
 
 .logo{
-    font-size:32px;
-    font-weight:700;
-    color:#111;
+
+display:flex;
+
+align-items:center;
+
 }
 
-.logo span{
-    color:#0f7d3a;
+.logo img{
+
+height:65px;
+
+width:auto;
+
+display:block;
+
+}
+
+@media(max-width:576px){
+
+.logo img{
+
+height:50px;
+
+}
+
 }
 
 .nav-links{
