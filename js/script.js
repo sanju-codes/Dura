@@ -343,6 +343,182 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
+   /* ===========================
+   FACTORY OUTLETS CAROUSEL
+=========================== */
+
+const carousel = document.getElementById("factoryCarousel");
+const cards = document.querySelectorAll(".factory-card");
+const prevBtn = document.querySelector(".prev");
+const nextBtn = document.querySelector(".next");
+const dots = document.querySelectorAll(".dot");
+
+let index = 0;
+let autoSlide;
+
+const cardWidth = () => cards[0].offsetWidth + 25;
+
+// Scroll to Card
+function goToSlide(i) {
+
+    if (i < 0)
+        index = cards.length - 1;
+    else if (i >= cards.length)
+        index = 0;
+    else
+        index = i;
+
+    carousel.scrollTo({
+        left: index * cardWidth(),
+        behavior: "smooth"
+    });
+
+    updateDots();
+}
+
+// Update Dots
+function updateDots() {
+
+    dots.forEach(dot => dot.classList.remove("active"));
+
+    if (dots[index]) {
+        dots[index].classList.add("active");
+    }
+}
+
+// Next
+nextBtn.addEventListener("click", () => {
+    goToSlide(index + 1);
+});
+
+// Previous
+prevBtn.addEventListener("click", () => {
+    goToSlide(index - 1);
+});
+
+// Dot Click
+dots.forEach((dot, i) => {
+
+    dot.addEventListener("click", () => {
+
+        goToSlide(i);
+
+    });
+
+});
+
+// Auto Slide
+function startAutoSlide() {
+
+    autoSlide = setInterval(() => {
+
+        goToSlide(index + 1);
+
+    }, 3500);
+
+}
+
+function stopAutoSlide() {
+
+    clearInterval(autoSlide);
+
+}
+
+startAutoSlide();
+
+// Pause on Hover
+carousel.addEventListener("mouseenter", stopAutoSlide);
+
+carousel.addEventListener("mouseleave", startAutoSlide);
+
+// =====================
+// Swipe Support
+// =====================
+
+let startX = 0;
+let endX = 0;
+
+carousel.addEventListener("touchstart", e => {
+
+    stopAutoSlide();
+
+    startX = e.touches[0].clientX;
+
+});
+
+carousel.addEventListener("touchend", e => {
+
+    endX = e.changedTouches[0].clientX;
+
+    if (startX - endX > 50) {
+
+        goToSlide(index + 1);
+
+    } else if (endX - startX > 50) {
+
+        goToSlide(index - 1);
+
+    }
+
+    startAutoSlide();
+
+});
+
+// =====================
+// Mouse Drag
+// =====================
+
+let isDown = false;
+let dragStart;
+
+carousel.addEventListener("mousedown", e => {
+
+    isDown = true;
+
+    dragStart = e.pageX;
+
+    stopAutoSlide();
+
+});
+
+carousel.addEventListener("mouseup", e => {
+
+    if (!isDown) return;
+
+    isDown = false;
+
+    const diff = e.pageX - dragStart;
+
+    if (diff < -60) {
+
+        goToSlide(index + 1);
+
+    } else if (diff > 60) {
+
+        goToSlide(index - 1);
+
+    }
+
+    startAutoSlide();
+
+});
+
+carousel.addEventListener("mouseleave", () => {
+
+    isDown = false;
+
+});
+
+// Responsive
+window.addEventListener("resize", () => {
+
+    goToSlide(index);
+
+});
+
+// Initial
+goToSlide(0);
+   
 
     /* ===============================
        BACK TO TOP BUTTON
