@@ -657,6 +657,194 @@ color:#0f7d3a;
 
 }
 
+/* ===========================
+   FACTORY OUTLETS
+=========================== */
+
+.factory-section{
+    width:100%;
+    padding:80px 20px;
+    background:#f8fafc;
+    overflow:hidden;
+}
+
+.factory-heading{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.factory-heading span{
+    display:inline-block;
+    background:#0ea5e9;
+    color:#fff;
+    padding:6px 16px;
+    border-radius:30px;
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:12px;
+}
+
+.factory-heading h2{
+    font-size:36px;
+    color:#1e293b;
+    margin-bottom:10px;
+}
+
+.factory-heading p{
+    color:#64748b;
+    font-size:16px;
+}
+
+.factory-slider{
+    position:relative;
+    width:100%;
+}
+
+.factory-carousel{
+    display:flex;
+    gap:25px;
+    overflow-x:auto;
+    scroll-behavior:smooth;
+    scroll-snap-type:x mandatory;
+    padding:10px 0 25px;
+    scrollbar-width:none;
+}
+
+.factory-carousel::-webkit-scrollbar{
+    display:none;
+}
+
+.factory-card{
+    min-width:340px;
+    max-width:340px;
+    background:#fff;
+    border-radius:22px;
+    overflow:hidden;
+    flex-shrink:0;
+    scroll-snap-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    transition:.35s;
+}
+
+.factory-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 40px rgba(0,0,0,.15);
+}
+
+.factory-card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.factory-content{
+    padding:22px;
+}
+
+.factory-content h3{
+    margin-bottom:10px;
+    color:#0f172a;
+    font-size:22px;
+}
+
+.factory-content p{
+    color:#64748b;
+    line-height:1.7;
+    margin-bottom:20px;
+}
+
+.factory-buttons{
+    display:flex;
+    gap:12px;
+}
+
+.call-btn,
+.direction-btn{
+    flex:1;
+    text-align:center;
+    text-decoration:none;
+    padding:12px;
+    border-radius:12px;
+    color:#fff;
+    font-weight:600;
+    transition:.3s;
+}
+
+.call-btn{
+    background:#22c55e;
+}
+
+.direction-btn{
+    background:#2563eb;
+}
+
+.call-btn:hover{
+    background:#16a34a;
+}
+
+.direction-btn:hover{
+    background:#1d4ed8;
+}
+
+.slider-btn{
+    position:absolute;
+    top:45%;
+    transform:translateY(-50%);
+    width:48px;
+    height:48px;
+    border:none;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+    cursor:pointer;
+    font-size:22px;
+    z-index:10;
+}
+
+.prev{
+    left:-10px;
+}
+
+.next{
+    right:-10px;
+}
+
+.slider-dots{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-top:25px;
+}
+
+.dot{
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:#cbd5e1;
+    transition:.3s;
+}
+
+.dot.active{
+    background:#0ea5e9;
+    transform:scale(1.3);
+}
+
+@media(max-width:768px){
+
+.factory-card{
+    min-width:85%;
+}
+
+.factory-heading h2{
+    font-size:28px;
+}
+
+.slider-btn{
+    display:none;
+}
+
+}
+
 /* =======================
 CTA
 ======================= */
