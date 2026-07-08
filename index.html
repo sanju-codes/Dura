@@ -3,6 +3,13 @@
 
 <head>
 
+<!-- GSAP -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+
+<!-- Lenis Smooth Scroll -->
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script> 
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -107,48 +114,51 @@ Download Brochure
 
 <section class="hero">
 
-<div class="overlay"></div>
+    <video autoplay muted loop playsinline class="hero-video">
+        <source src="videos/hero.mp4" type="video/mp4">
+    </video>
 
-<div class="container">
+    <div class="hero-overlay"></div>
 
-<div class="hero-content">
+    <div class="hero-content">
 
-<h1>
+        <span class="hero-tag">
+            PREMIUM ROOFING SOLUTIONS
+        </span>
 
-Premium UPVC Roofing Sheets in Kerala
+        <h1>
+            Premium UPVC Roofing Sheets
+        </h1>
 
-</h1>
+        <p>
 
-<p>
+            Durable • Heat Resistant • Waterproof
 
-Strong. Durable. Weather Resistant.
+            <br>
 
-Protect your home and industry with
-high quality roofing solutions.
+            Built for Kerala Weather.
 
-</p>
+        </p>
 
-<div class="hero-buttons">
+        <div class="hero-buttons">
 
-<a href="products.html"
-class="btn">
+            <a href="products.html" class="btn-main">
+                Explore Products
+            </a>
 
-Explore Products
+            <a href="contact.html" class="btn-outline">
+                Contact Us
+            </a>
 
-</a>
+        </div>
 
-<a href="contact.html"
-class="btn outline">
+    </div>
 
-Contact Us
+    <div class="scroll-indicator">
 
-</a>
+        <span></span>
 
-</div>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
