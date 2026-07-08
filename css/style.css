@@ -15,10 +15,19 @@ html{
     scroll-behavior:smooth;
 }
 
+:root{
+    --bg:#111827;
+    --card:#1F2937;
+    --primary:#16A34A;
+    --primary2:#22C55E;
+    --text:#ffffff;
+    --muted:#d1d5db;
+}
+
 body{
     font-family:'Poppins',sans-serif;
-    color:#222;
-    background:#fff;
+    color:var(--text);
+    background:var(--bg);
     overflow-x:hidden;
 }
 
