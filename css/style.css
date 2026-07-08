@@ -509,6 +509,31 @@ transform:scale(1.08);
 
 }
 
+.product-content{
+    padding:28px;
+}
+
+.product-content h3{
+    color:#fff;
+    margin-bottom:15px;
+}
+
+.product-content p{
+    color:#d1d5db;
+    margin-bottom:20px;
+    line-height:1.7;
+}
+
+.product-content a{
+    color:#22C55E;
+    font-weight:600;
+    transition:.3s;
+}
+
+.product-content a:hover{
+    color:#4ADE80;
+}
+
 
 /* =======================
 STATS
