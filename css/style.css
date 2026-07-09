@@ -1594,3 +1594,322 @@ animation:float 3s infinite;
 
 }
 
+/*==================================================
+PRELOADER
+==================================================*/
+
+.preloader{
+    position:fixed;
+    inset:0;
+    background:#0F172A;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:99999;
+    transition:.5s;
+}
+
+.preloader.hide{
+    opacity:0;
+    visibility:hidden;
+}
+
+.preloader::after{
+    content:"";
+    width:60px;
+    height:60px;
+    border:5px solid rgba(255,255,255,.15);
+    border-top:5px solid #22C55E;
+    border-radius:50%;
+    animation:loaderSpin 1s linear infinite;
+}
+
+@keyframes loaderSpin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+
+/*==================================================
+LIGHTBOX
+==================================================*/
+
+.lightbox{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.92);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    z-index:99999;
+
+}
+
+.lightbox img{
+
+    max-width:92%;
+
+    max-height:88vh;
+
+    border-radius:18px;
+
+    box-shadow:0 20px 60px rgba(0,0,0,.5);
+
+}
+
+.close-lightbox{
+
+    position:absolute;
+
+    top:25px;
+
+    right:35px;
+
+    color:#fff;
+
+    font-size:42px;
+
+    cursor:pointer;
+
+}
+
+
+/*==================================================
+BACK TO TOP
+==================================================*/
+
+.back-top{
+
+    position:fixed;
+
+    right:25px;
+
+    bottom:190px;
+
+    width:55px;
+
+    height:55px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#22C55E;
+
+    color:#fff;
+
+    font-size:20px;
+
+    cursor:pointer;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.35s;
+
+    z-index:9999;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.35);
+
+}
+
+.back-top.show{
+
+    opacity:1;
+
+    visibility:visible;
+
+}
+
+.back-top:hover{
+
+    transform:translateY(-5px);
+
+    background:#16A34A;
+
+}
+
+
+/*==================================================
+RIPPLE EFFECT
+==================================================*/
+
+.btn{
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.ripple{
+
+    position:absolute;
+
+    width:12px;
+
+    height:12px;
+
+    background:rgba(255,255,255,.45);
+
+    border-radius:50%;
+
+    transform:translate(-50%,-50%);
+
+    animation:ripple .6s linear;
+
+}
+
+@keyframes ripple{
+
+    from{
+
+        width:0;
+
+        height:0;
+
+        opacity:1;
+
+    }
+
+    to{
+
+        width:420px;
+
+        height:420px;
+
+        opacity:0;
+
+    }
+
+}
+
+
+/*==================================================
+MOBILE NAVIGATION
+==================================================*/
+
+@media(max-width:992px){
+
+.nav-links{
+
+position:absolute;
+
+top:82px;
+
+left:0;
+
+width:100%;
+
+background:#0F172A;
+
+display:flex;
+
+flex-direction:column;
+
+padding:25px;
+
+gap:20px;
+
+transform:translateY(-120%);
+
+opacity:0;
+
+visibility:hidden;
+
+transition:.35s;
+
+}
+
+.nav-links.active{
+
+transform:translateY(0);
+
+opacity:1;
+
+visibility:visible;
+
+}
+
+.menu-btn{
+
+display:block;
+
+}
+
+.nav-actions{
+
+display:none;
+
+}
+
+}
+
+
+/*==================================================
+ACTIVE MENU
+==================================================*/
+
+.nav-links a.active{
+
+color:#22C55E;
+
+}
+
+
+/*==================================================
+CUSTOM SCROLLBAR
+==================================================*/
+
+::-webkit-scrollbar{
+
+width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:#0F172A;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:#22C55E;
+
+border-radius:30px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+background:#16A34A;
+
+}
+
+
+/*==================================================
+TEXT SELECTION
+==================================================*/
+
+::selection{
+
+background:#22C55E;
+
+color:#fff;
+
+}
+
+
+/*==================================================
+END OF FILE
+==================================================*/
