@@ -7,7 +7,7 @@ const closeBtn = document.getElementById("closeEnquiry");
 const modal = document.getElementById("enquiryModal");
 const form = document.getElementById("enquiryForm");
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbznYOYvRs2QvCYTm_9xF1VVsQqRU0qZtLibLQj-ia5KRLOdXFM0PMD8dHmEaBtgGpc/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwPCy3s4ioh47o6LZM6JxkBjjMpy3symB5aZOlF25exInuwOxadCrXogj4K8Lq42s8/exec";
 
 // Popup Open
 openBtn.addEventListener("click", function(e){
