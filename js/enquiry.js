@@ -54,7 +54,7 @@ form.addEventListener("submit", async function(e){
     try{
 
         // Google Sheets
-        if(SCRIPT_URL !== "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEBAPP_URL_HERE"){
+        if(SCRIPT_URL !== "https://script.google.com/macros/s/AKfycbwPCy3s4ioh47o6LZM6JxkBjjMpy3symB5aZOlF25exInuwOxadCrXogj4K8Lq42s8/exec"){
 
             await fetch(SCRIPT_URL,{
                 method:"POST",
