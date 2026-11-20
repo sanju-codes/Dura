@@ -214,4 +214,23 @@ document.addEventListener("DOMContentLoaded", () => {
   updateTopButton();
   window.addEventListener("scroll", updateTopButton, { passive: true });
   topButton.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+  // Pointer-driven 3D tilt for desktop hero visual
+  const heroProduct = document.querySelector(".hero-3d-product[data-tilt]");
+  if (heroProduct && window.matchMedia("(pointer: fine)").matches &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const scene = heroProduct.closest(".hero-3d-scene");
+    scene.addEventListener("pointermove", event => {
+      const rect = scene.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      heroProduct.style.animation = "none";
+      heroProduct.style.transform = `rotateY(${-17 + x * 16}deg) rotateX(${8 - y * 14}deg) rotateZ(${-4 + x * 3}deg)`;
+    });
+    scene.addEventListener("pointerleave", () => {
+      heroProduct.style.transform = "";
+      heroProduct.style.animation = "";
+    });
+  }
+
 });
