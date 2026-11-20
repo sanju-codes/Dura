@@ -1,618 +1,217 @@
-/* ==========================================
-   DURA ROOF - SCRIPT.JS
-   ========================================== */
+/* DURA ROOF - polished, accessible site interactions */
+document.addEventListener("DOMContentLoaded", () => {
+  const menuBtn = document.querySelector(".menu-btn");
+  const navLinks = document.querySelector(".nav-links");
 
-document.addEventListener("DOMContentLoaded", function () {
+  // Mobile navigation
+  if (menuBtn && navLinks) {
+    menuBtn.setAttribute("role", "button");
+    menuBtn.setAttribute("tabindex", "0");
+    menuBtn.setAttribute("aria-label", "Toggle navigation");
+    menuBtn.setAttribute("aria-expanded", "false");
 
-    /* ===============================
-       MOBILE MENU TOGGLE
-    =============================== */
+    const toggleMenu = () => {
+      const isOpen = navLinks.classList.toggle("active");
+      menuBtn.setAttribute("aria-expanded", String(isOpen));
+      const icon = menuBtn.querySelector("i");
+      if (icon) {
+        icon.classList.toggle("fa-bars", !isOpen);
+        icon.classList.toggle("fa-xmark", isOpen);
+      }
+    };
 
-    const menuBtn = document.querySelector(".menu-btn");
-    const navLinks = document.querySelector(".nav-links");
-
-    if (menuBtn && navLinks) {
-
-        menuBtn.addEventListener("click", () => {
-
-            navLinks.classList.toggle("active");
-
-            if (navLinks.classList.contains("active")) {
-
-                navLinks.style.display = "flex";
-                navLinks.style.flexDirection = "column";
-                navLinks.style.position = "absolute";
-                navLinks.style.top = "95px";
-                navLinks.style.left = "0";
-                navLinks.style.width = "100%";
-                navLinks.style.background = "#fff";
-                navLinks.style.padding = "25px";
-                navLinks.style.boxShadow = "0 10px 25px rgba(0,0,0,.1)";
-                navLinks.style.gap = "20px";
-
-            } else {
-
-                navLinks.removeAttribute("style");
-
-            }
-
-        });
-
-    }
-
-
-    /* ===============================
-       STICKY HEADER EFFECT
-    =============================== */
-
-    const header = document.querySelector("header");
-
-    window.addEventListener("scroll", () => {
-
-        if (window.scrollY > 50) {
-
-            header.style.boxShadow =
-                "0 10px 30px rgba(0,0,0,.12)";
-
-            header.style.background = "#fff";
-
+    menuBtn.addEventListener("click", toggleMenu);
+    menuBtn.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        toggleMenu();
+      }
+    });
+    navLinks.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("active");
+        menuBtn.setAttribute("aria-expanded", "false");
+        const icon = menuBtn.querySelector("i");
+        if (icon) {
+          icon.classList.add("fa-bars");
+          icon.classList.remove("fa-xmark");
         }
+      });
+    });
+    document.addEventListener("click", event => {
+      if (!navLinks.contains(event.target) && !menuBtn.contains(event.target)) {
+        navLinks.classList.remove("active");
+        menuBtn.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
 
-        else {
+  // Header elevation on scroll
+  const header = document.querySelector("header");
+  const updateHeader = () => {
+    if (header) header.classList.toggle("is-scrolled", window.scrollY > 24);
+  };
+  updateHeader();
+  window.addEventListener("scroll", updateHeader, { passive: true });
 
-            header.style.boxShadow =
-                "0 2px 15px rgba(0,0,0,.08)";
+  // Smooth in-page links
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener("click", event => {
+      const selector = link.getAttribute("href");
+      if (!selector || selector === "#") return;
+      const target = document.querySelector(selector);
+      if (target) {
+        event.preventDefault();
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  });
 
+  // Animated statistics, triggered once when visible
+  const stats = document.querySelector(".stats");
+  if (stats && "IntersectionObserver" in window) {
+    const counterObserver = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting)) return;
+      stats.querySelectorAll("h2").forEach(counter => {
+        const original = counter.textContent.trim();
+        const number = Number.parseInt(original.replace(/[^0-9]/g, ""), 10);
+        if (!Number.isFinite(number)) return;
+        const suffix = original.includes("%") ? "%" : (original.includes("+") ? "+" : "");
+        const duration = 1100;
+        const startTime = performance.now();
+        const animate = now => {
+          const progress = Math.min((now - startTime) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          counter.textContent = Math.floor(number * eased) + suffix;
+          if (progress < 1) requestAnimationFrame(animate);
+        };
+        requestAnimationFrame(animate);
+      });
+      counterObserver.disconnect();
+    }, { threshold: 0.25 });
+    counterObserver.observe(stats);
+  }
+
+  // Scroll reveal with a safe no-JS fallback
+  const revealItems = document.querySelectorAll(
+    ".feature-card, .product-card, .gallery-grid img, .testimonial-box, .about-content, .about-image"
+  );
+  if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    revealItems.forEach(item => item.classList.add("reveal-pending"));
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          revealObserver.unobserve(entry.target);
         }
+      });
+    }, { threshold: 0.12 });
+    revealItems.forEach(item => revealObserver.observe(item));
+  }
 
+  // Gallery lightbox
+  document.querySelectorAll(".gallery-grid img").forEach(img => {
+    img.addEventListener("click", () => {
+      const lightbox = document.createElement("div");
+      lightbox.className = "dura-lightbox";
+      lightbox.setAttribute("role", "dialog");
+      lightbox.setAttribute("aria-modal", "true");
+      lightbox.setAttribute("aria-label", img.alt || "Project image");
+      const fullImage = document.createElement("img");
+      fullImage.src = img.currentSrc || img.src;
+      fullImage.alt = img.alt || "Dura Roof project";
+      const close = document.createElement("button");
+      close.type = "button";
+      close.className = "dura-lightbox-close";
+      close.setAttribute("aria-label", "Close image");
+      close.textContent = "×";
+      lightbox.append(close, fullImage);
+      document.body.appendChild(lightbox);
+      document.body.style.overflow = "hidden";
+      const closeLightbox = () => {
+        lightbox.remove();
+        document.body.style.overflow = "";
+        document.removeEventListener("keydown", onKey);
+      };
+      const onKey = event => { if (event.key === "Escape") closeLightbox(); };
+      close.addEventListener("click", closeLightbox);
+      lightbox.addEventListener("click", event => {
+        if (event.target === lightbox) closeLightbox();
+      });
+      document.addEventListener("keydown", onKey);
     });
+  });
 
-
-    /* ===============================
-       SMOOTH SCROLL
-    =============================== */
-
-    const links = document.querySelectorAll('a[href^="#"]');
-
-    links.forEach(link => {
-
-        link.addEventListener("click", function (e) {
-
-            const targetId = this.getAttribute("href");
-
-            if (targetId === "#")
-                return;
-
-            const target =
-                document.querySelector(targetId);
-
-            if (target) {
-
-                e.preventDefault();
-
-                target.scrollIntoView({
-
-                    behavior: "smooth"
-
-                });
-
-            }
-
-        });
-
+  // FAQ accordion
+  document.querySelectorAll(".faq-question").forEach(question => {
+    question.setAttribute("aria-expanded", "false");
+    question.addEventListener("click", () => {
+      const answer = question.nextElementSibling;
+      const isOpen = question.classList.toggle("active");
+      question.setAttribute("aria-expanded", String(isOpen));
+      if (answer) answer.style.maxHeight = isOpen ? answer.scrollHeight + "px" : null;
     });
-
-
-    /* ===============================
-       COUNTER ANIMATION
-    =============================== */
-
-    const counters = document.querySelectorAll(".stats h2");
-
-    let counterStarted = false;
-
-    function runCounter() {
-
-        counters.forEach(counter => {
-
-            let value =
-                counter.innerText.replace("+", "")
-                                 .replace("%", "");
-
-            value = parseInt(value);
-
-            let start = 0;
-
-            const increment = value / 100;
-
-            const timer = setInterval(() => {
-
-                start += increment;
-
-                if (start >= value) {
-
-                    start = value;
-
-                    clearInterval(timer);
-
-                }
-
-                if (counter.innerText.includes("%")) {
-
-                    counter.innerText =
-                        Math.floor(start) + "%";
-
-                }
-
-                else {
-
-                    counter.innerText =
-                        Math.floor(start) + "+";
-
-                }
-
-            }, 20);
-
-        });
-
-    }
-
-    window.addEventListener("scroll", () => {
-
-        const stats = document.querySelector(".stats");
-
-        if (!stats) return;
-
-        const pos = stats.offsetTop - 300;
-
-        if (window.scrollY > pos && !counterStarted) {
-
-            counterStarted = true;
-
-            runCounter();
-
-        }
-
-    });
-
-
-
-    /* ===============================
-       GALLERY LIGHTBOX
-    =============================== */
-
-    const galleryImages =
-        document.querySelectorAll(".gallery-grid img");
-
-    galleryImages.forEach(img => {
-
-        img.addEventListener("click", () => {
-
-            const overlay =
-                document.createElement("div");
-
-            overlay.style.position = "fixed";
-            overlay.style.left = "0";
-            overlay.style.top = "0";
-            overlay.style.width = "100%";
-            overlay.style.height = "100%";
-            overlay.style.background =
-                "rgba(0,0,0,.9)";
-            overlay.style.display = "flex";
-            overlay.style.justifyContent =
-                "center";
-            overlay.style.alignItems =
-                "center";
-            overlay.style.zIndex = "99999";
-
-            const image =
-                document.createElement("img");
-
-            image.src = img.src;
-
-            image.style.maxWidth = "90%";
-            image.style.maxHeight = "90%";
-            image.style.borderRadius = "15px";
-
-            overlay.appendChild(image);
-
-            document.body.appendChild(overlay);
-
-            overlay.addEventListener("click", () => {
-
-                overlay.remove();
-
-            });
-
-        });
-
-    });
-
-
-    /* ===============================
-       SCROLL REVEAL ANIMATION
-    =============================== */
-
-    const revealElements =
-        document.querySelectorAll(
-
-            ".feature-card, \
-             .product-card, \
-             .gallery-grid img, \
-             .testimonial-box, \
-             .about-content, \
-             .about-image"
-
-        );
-
-    revealElements.forEach(el => {
-
-        el.style.opacity = "0";
-
-        el.style.transform =
-            "translateY(40px)";
-
-        el.style.transition =
-            "all .8s ease";
-
-    });
-
-    function revealOnScroll() {
-
-        revealElements.forEach(el => {
-
-            const top =
-                el.getBoundingClientRect().top;
-
-            const screen =
-                window.innerHeight - 100;
-
-            if (top < screen) {
-
-                el.style.opacity = "1";
-
-                el.style.transform =
-                    "translateY(0)";
-
-            }
-
-        });
-
-    }
-
-    window.addEventListener(
-
-        "scroll",
-
-        revealOnScroll
-
-    );
-
-    revealOnScroll();
-
-
-
-    /* ===============================
-       FAQ ACCORDION
-    =============================== */
-
-    const faqQuestions =
-
-        document.querySelectorAll(
-
-            ".faq-question"
-
-        );
-
-    faqQuestions.forEach(item => {
-
-        item.addEventListener("click",
-
-            function () {
-
-                this.classList.toggle("active");
-
-                const answer =
-
-                    this.nextElementSibling;
-
-                if (
-
-                    answer.style.maxHeight
-
-                ) {
-
-                    answer.style.maxHeight = null;
-
-                }
-
-                else {
-
-                    answer.style.maxHeight =
-
-                        answer.scrollHeight +
-
-                        "px";
-
-                }
-
-            }
-
-        );
-
-    });
-
-
-   /* ===========================
-   FACTORY OUTLETS CAROUSEL
-=========================== */
-
-const carousel = document.getElementById("factoryCarousel");
-const cards = document.querySelectorAll(".factory-card");
-const prevBtn = document.querySelector(".prev");
-const nextBtn = document.querySelector(".next");
-const dots = document.querySelectorAll(".dot");
-
-let index = 0;
-let autoSlide;
-
-const cardWidth = () => cards[0].offsetWidth + 25;
-
-// Scroll to Card
-function goToSlide(i) {
-
-    if (i < 0)
-        index = cards.length - 1;
-    else if (i >= cards.length)
-        index = 0;
-    else
-        index = i;
-
-    carousel.scrollTo({
-        left: index * cardWidth(),
-        behavior: "smooth"
-    });
-
-    updateDots();
-}
-
-// Update Dots
-function updateDots() {
-
-    dots.forEach(dot => dot.classList.remove("active"));
-
-    if (dots[index]) {
-        dots[index].classList.add("active");
-    }
-}
-
-// Next
-nextBtn.addEventListener("click", () => {
-    goToSlide(index + 1);
+  });
+
+  // Factory outlet carousel - safely initialise only where it exists
+  const carousel = document.getElementById("factoryCarousel");
+  if (carousel) {
+    const cards = [...carousel.querySelectorAll(".factory-card")];
+    const prev = document.querySelector(".prev");
+    const next = document.querySelector(".next");
+    const dots = [...document.querySelectorAll(".dot")];
+    let index = 0;
+    let timer = null;
+
+    const cardStep = () => cards[0] ? cards[0].getBoundingClientRect().width + 25 : 300;
+    const goTo = nextIndex => {
+      if (!cards.length) return;
+      index = (nextIndex + cards.length) % cards.length;
+      carousel.scrollTo({ left: index * cardStep(), behavior: "smooth" });
+      dots.forEach((dot, dotIndex) => {
+        dot.classList.toggle("active", dotIndex === index);
+        dot.setAttribute("aria-current", dotIndex === index ? "true" : "false");
+      });
+    };
+    if (prev) prev.addEventListener("click", () => goTo(index - 1));
+    if (next) next.addEventListener("click", () => goTo(index + 1));
+    dots.forEach((dot, dotIndex) => dot.addEventListener("click", () => goTo(dotIndex)));
+
+    const stop = () => { if (timer) window.clearInterval(timer); timer = null; };
+    const start = () => {
+      stop();
+      if (cards.length > 1 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        timer = window.setInterval(() => goTo(index + 1), 5000);
+      }
+    };
+    carousel.addEventListener("mouseenter", stop);
+    carousel.addEventListener("mouseleave", start);
+    carousel.addEventListener("focusin", stop);
+    carousel.addEventListener("focusout", start);
+    document.addEventListener("visibilitychange", () => document.hidden ? stop() : start());
+    let touchStart = 0;
+    carousel.addEventListener("touchstart", event => {
+      touchStart = event.changedTouches[0].clientX;
+      stop();
+    }, { passive: true });
+    carousel.addEventListener("touchend", event => {
+      const delta = event.changedTouches[0].clientX - touchStart;
+      if (Math.abs(delta) > 45) goTo(index + (delta < 0 ? 1 : -1));
+      start();
+    }, { passive: true });
+    goTo(0);
+    start();
+  }
+
+  // Back-to-top control
+  const topButton = document.createElement("button");
+  topButton.type = "button";
+  topButton.className = "dura-back-top";
+  topButton.setAttribute("aria-label", "Back to top");
+  topButton.textContent = "↑";
+  document.body.appendChild(topButton);
+  const updateTopButton = () => topButton.classList.toggle("is-visible", window.scrollY > 450);
+  updateTopButton();
+  window.addEventListener("scroll", updateTopButton, { passive: true });
+  topButton.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 });
-
-// Previous
-prevBtn.addEventListener("click", () => {
-    goToSlide(index - 1);
-});
-
-// Dot Click
-dots.forEach((dot, i) => {
-
-    dot.addEventListener("click", () => {
-
-        goToSlide(i);
-
-    });
-
-});
-
-// Auto Slide
-function startAutoSlide() {
-
-    autoSlide = setInterval(() => {
-
-        goToSlide(index + 1);
-
-    }, 3500);
-
-}
-
-function stopAutoSlide() {
-
-    clearInterval(autoSlide);
-
-}
-
-startAutoSlide();
-
-// Pause on Hover
-carousel.addEventListener("mouseenter", stopAutoSlide);
-
-carousel.addEventListener("mouseleave", startAutoSlide);
-
-// =====================
-// Swipe Support
-// =====================
-
-let startX = 0;
-let endX = 0;
-
-carousel.addEventListener("touchstart", e => {
-
-    stopAutoSlide();
-
-    startX = e.touches[0].clientX;
-
-});
-
-carousel.addEventListener("touchend", e => {
-
-    endX = e.changedTouches[0].clientX;
-
-    if (startX - endX > 50) {
-
-        goToSlide(index + 1);
-
-    } else if (endX - startX > 50) {
-
-        goToSlide(index - 1);
-
-    }
-
-    startAutoSlide();
-
-});
-
-// =====================
-// Mouse Drag
-// =====================
-
-let isDown = false;
-let dragStart;
-
-carousel.addEventListener("mousedown", e => {
-
-    isDown = true;
-
-    dragStart = e.pageX;
-
-    stopAutoSlide();
-
-});
-
-carousel.addEventListener("mouseup", e => {
-
-    if (!isDown) return;
-
-    isDown = false;
-
-    const diff = e.pageX - dragStart;
-
-    if (diff < -60) {
-
-        goToSlide(index + 1);
-
-    } else if (diff > 60) {
-
-        goToSlide(index - 1);
-
-    }
-
-    startAutoSlide();
-
-});
-
-carousel.addEventListener("mouseleave", () => {
-
-    isDown = false;
-
-});
-
-// Responsive
-window.addEventListener("resize", () => {
-
-    goToSlide(index);
-
-});
-
-// Initial
-goToSlide(0);
-   
-
-    /* ===============================
-       BACK TO TOP BUTTON
-    =============================== */
-
-    const topBtn =
-
-        document.createElement("button");
-
-    topBtn.innerHTML = "↑";
-
-    topBtn.style.position = "fixed";
-
-    topBtn.style.bottom = "95px";
-
-    topBtn.style.right = "25px";
-
-    topBtn.style.width = "50px";
-
-    topBtn.style.height = "50px";
-
-    topBtn.style.border = "none";
-
-    topBtn.style.borderRadius = "50%";
-
-    topBtn.style.background = "#0f7d3a";
-
-    topBtn.style.color = "#fff";
-
-    topBtn.style.fontSize = "22px";
-
-    topBtn.style.cursor = "pointer";
-
-    topBtn.style.display = "none";
-
-    topBtn.style.zIndex = "999";
-
-    topBtn.style.boxShadow =
-
-        "0 5px 20px rgba(0,0,0,.2)";
-
-    document.body.appendChild(topBtn);
-
-
-    window.addEventListener("scroll",
-
-        () => {
-
-            if (
-
-                window.scrollY > 400
-
-            ) {
-
-                topBtn.style.display =
-
-                    "block";
-
-            }
-
-            else {
-
-                topBtn.style.display =
-
-                    "none";
-
-            }
-
-        }
-
-    );
-
-
-    topBtn.addEventListener(
-
-        "click",
-
-        () => {
-
-            window.scrollTo({
-
-                top: 0,
-
-                behavior: "smooth"
-
-            });
-
-        }
-
-    );
-
-
-});
-
-/* ==========================================
-   END OF SCRIPT.JS
-========================================== */
