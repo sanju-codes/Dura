@@ -32,7 +32,7 @@ import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.m
     const angle=Math.atan2(1.35,2.35),slope=Math.sqrt(2.35*2.35+1.35*1.35),panelCount=5,panelWidth=4.95/panelCount;
     function makePanel(side,index){
       const z0=-2.475+index*panelWidth;const rows=48,cols=48;const positions=[],uv=[],indices=[];
-      for(let i=0;i<=rows;i++){const u=i/rows*slope;for(let j=0;j<=cols;j++){const z=z0+j/cols*panelWidth;const rib=Math.cos((z-z0)/panelWidth* Math.PI*8)*.052;const x=side*(u*Math.cos(angle));const y=2.05+u*Math.sin(angle)+rib;positions.push(x,y,z);uv.push(i/rows,j/cols);}}
+      for(let i=0;i<=rows;i++){const u=i/rows*slope;for(let j=0;j<=cols;j++){const z=z0+j/cols*panelWidth;const rib=Math.cos((z-z0)/panelWidth* Math.PI*8)*.052;const x=side*(u*Math.cos(angle));const y=3.4-u*Math.sin(angle)+rib;positions.push(x,y,z);uv.push(i/rows,j/cols);}}
       for(let i=0;i<rows;i++)for(let j=0;j<cols;j++){const a=i*(cols+1)+j,b=a+cols+1;indices.push(a,b,a+1,b,b+1,a+1);}
       const g=new THREE.BufferGeometry();g.setAttribute("position",new THREE.Float32BufferAttribute(positions,3));g.setAttribute("uv",new THREE.Float32BufferAttribute(uv,2));g.setIndex(indices);g.computeVertexNormals();
       const mesh=new THREE.Mesh(g,roofMat);mesh.castShadow=true;mesh.receiveShadow=true;model.add(mesh);
@@ -44,7 +44,7 @@ import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.m
     for(let side of [-1,1]){const trim=new THREE.Mesh(new THREE.BoxGeometry(.12,.14,5.08),edgeMat);trim.position.set(side*2.35,2.02,0);model.add(trim);}
     // Small roof fasteners along the sheet edges.
     const boltMat=new THREE.MeshStandardMaterial({color:0xc6c9bd,metalness:.8,roughness:.25});
-    for(let side of [-1,1])for(let z=-2.2;z<=2.21;z+=.55){const bolt=new THREE.Mesh(new THREE.SphereGeometry(.035,8,6),boltMat);bolt.position.set(side*1.78,2.05+1.02+Math.cos((z+2.475)/panelWidth*Math.PI*8)*.052,z);model.add(bolt);}
+    for(let side of [-1,1])for(let z=-2.2;z<=2.21;z+=.55){const bolt=new THREE.Mesh(new THREE.SphereGeometry(.035,8,6),boltMat);bolt.position.set(side*1.78,3.4-1.02+Math.cos((z+2.475)/panelWidth*Math.PI*8)*.052,z);model.add(bolt);}
     model.rotation.y=-.35;
     let targetRotY=-.35,targetRotX=0,dragging=false,lastX=0,lastY=0,autoRotate=true;
     const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;if(reduced)autoRotate=false;
