@@ -1403,3 +1403,6 @@ footer { background: #101b15; }
 
 /* Uploaded advertisement photo */
 .dx-ad-art{isolation:isolate}.dx-ad-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}.dx-ad-photo-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,16,10,.88),rgba(5,16,10,.55) 58%,rgba(5,16,10,.2));z-index:-1;pointer-events:none}
+
+/* Image-only advertisement popup */
+.dx-ad-card.dx-ad-image-only{width:min(760px,100%);background:transparent;box-shadow:none;overflow:visible}.dx-ad-image-only .dx-ad-photo{display:block;position:static;width:100%;height:auto;max-height:82vh;object-fit:contain;background:transparent;box-shadow:0 25px 90px #0008}.dx-ad-image-only .dx-ad-close{right:-10px;top:-14px}
