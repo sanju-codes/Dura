@@ -168,7 +168,27 @@ Contact Us
 </section>
 
 
-<!-- ABOUT -->
+
+
+<!-- INTERACTIVE 3D UPVC ROOF SHOWROOM -->
+<section class="roof-showroom" id="3d-roof-showroom" aria-labelledby="roof3d-title">
+  <div class="roof-showroom-inner">
+    <div class="roof-showroom-copy">
+      <span class="roof-eyebrow">DURA ROOF · 3D PRODUCT EXPERIENCE</span>
+      <h2 id="roof3d-title">See the roof.<br><em>Feel the strength.</em></h2>
+      <p>Explore a detailed 3D concept of a DURA ROOF UPVC roofing system. Drag to rotate, zoom in to inspect the profile, and preview different finishes.</p>
+      <ul class="roof-benefits"><li><i class="fa-solid fa-shield-halved"></i> Built for all-weather protection</li><li><i class="fa-solid fa-house"></i> Designed for homes & industry</li><li><i class="fa-solid fa-layer-group"></i> Multi-rib roofing profile</li></ul>
+      <a class="roof-quote-link" href="contact.html">Request a product quote <span>↗</span></a>
+    </div>
+    <div class="roof-viewer-card">
+      <div class="roof-viewer-top"><span><b class="roof-live-dot"></b> LIVE 3D MODEL</span><span class="roof-viewer-hint">DRAG TO ROTATE · SCROLL TO ZOOM</span></div>
+      <div class="roof-canvas-wrap" id="duraRoofViewer"><canvas id="duraRoofCanvas" aria-label="Interactive three-dimensional UPVC roof model"></canvas><div class="roof-loading" id="roofLoading">Preparing 3D roof model…</div></div>
+      <div class="roof-viewer-controls"><div class="roof-finishes" role="group" aria-label="Roof sheet finish"><button type="button" class="roof-finish active" data-finish="green" aria-label="Forest green finish" aria-pressed="true"><span style="--swatch:#176b48"></span>Green</button><button type="button" class="roof-finish" data-finish="grey" aria-label="Graphite grey finish" aria-pressed="false"><span style="--swatch:#66717b"></span>Graphite</button><button type="button" class="roof-finish" data-finish="terracotta" aria-label="Terracotta finish" aria-pressed="false"><span style="--swatch:#a94f32"></span>Terracotta</button></div><button type="button" class="roof-reset" id="roofReset" aria-label="Reset 3D model view"><i class="fa-solid fa-rotate"></i> Reset view</button></div>
+      <div class="roof-viewer-foot"><span>Illustrative 3D product concept</span><span>01 / 03 FINISHES</span></div>
+    </div>
+  </div>
+</section>
+\n\n<!-- ABOUT -->
 
 <section class="about-home">
 
@@ -1036,7 +1056,7 @@ class="whatsapp">
 </a>
 
 
-<script src="js/script.js"></script>
+<script src="js/script.js"></script>\n<script type="module" src="js/roof-3d.js"></script>
 
 
 <script type="application/ld+json">
